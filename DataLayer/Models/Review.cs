@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Models
 {
-    internal class Review
+    public class Review
     {
         public Guid Id { get; set; }
         public Guid ProductId { get; set; }

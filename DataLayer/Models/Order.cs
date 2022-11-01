@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Models
 {
-    internal class Order
+    public class Order
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
