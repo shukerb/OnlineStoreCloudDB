@@ -1,0 +1,17 @@
+﻿using DataLayer.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataLayer.DTO
+{
+    internal class ProductDTO
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Amount { get; set; }
+        public List<ProductImage> Images { get; set; }
+    }
+}
