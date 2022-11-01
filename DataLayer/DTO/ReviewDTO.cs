@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.DTO
 {
-    internal class ReviewDTO
+    public class ReviewDTO
     {
         public string ProductID { get; set; }
         public double Rating { get; set; }

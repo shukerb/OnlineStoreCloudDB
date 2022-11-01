@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
             this._dBUtils = dBUtils;
         }
 
-        async Task<TEntity> IOnlineStore<TEntity>.AddAsync(TEntity entity)
+        async Task<TEntity> IOnlineStore<TEntity>.Add(TEntity entity)
         {
             IfNull(entity);
             await _dBUtils.AddAsync(entity);
@@ -25,7 +25,7 @@ namespace Infrastructure.Repositories
             return entity;
         }
 
-        async Task IOnlineStore<TEntity>.DeleteAsync(TEntity entity)
+        async Task IOnlineStore<TEntity>.Delete(TEntity entity)
         {
             IfNull(entity);
             _dBUtils.Remove(entity);
@@ -43,7 +43,7 @@ namespace Infrastructure.Repositories
             return data;
         }
 
-        async Task<TEntity> IOnlineStore<TEntity>.UpdateAsync(TEntity entity)
+        async Task<TEntity> IOnlineStore<TEntity>.Update(TEntity entity)
         {
             IfNull(entity);
             _dBUtils.Update(entity);

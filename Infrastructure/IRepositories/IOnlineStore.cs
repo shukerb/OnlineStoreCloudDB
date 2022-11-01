@@ -9,8 +9,8 @@ namespace Infrastructure.IRepositories
     public interface IOnlineStore<TEntity> where TEntity : class,new()
     {
         IQueryable<TEntity> GetAll();
-        Task<TEntity> AddAsync(TEntity entity);
-        Task<TEntity> UpdateAsync(TEntity entity);
-        Task DeleteAsync(TEntity entity);
+        Task<TEntity> Add(TEntity entity);
+        Task<TEntity> Update(TEntity entity);
+        Task Delete(TEntity entity);
     }
 }

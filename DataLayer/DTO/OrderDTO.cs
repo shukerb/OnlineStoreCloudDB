@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.DTO
 {
-    internal class OrderDTO
+    public class OrderDTO
     {
         public string UserId { get; set; }
 

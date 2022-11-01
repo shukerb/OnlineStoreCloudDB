@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.DTO
 {
-    internal class ProductDTO
+    public class ProductDTO
     {
         public string Name { get; set; }
         public string Description { get; set; }
