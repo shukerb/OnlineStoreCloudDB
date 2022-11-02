@@ -10,5 +10,6 @@ namespace Infrastructure.IServices
         Task<User> AddUser(UserDTO user);
         Task<User> UpdateUser(User user);
         Task DeleteUser(string userId);
+        Task<User> GetByEmail (string email);
     }
 }

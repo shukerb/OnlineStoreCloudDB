@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
 
         async Task<TEntity> IOnlineStore<TEntity>.Add(TEntity entity)
         {
-            IfNull(entity);
+            CheckIfNull(entity);
             await _dBUtils.AddAsync(entity);
             await _dBUtils.SaveChangesAsync();
             return entity;
@@ -27,7 +27,7 @@ namespace Infrastructure.Repositories
 
         async Task IOnlineStore<TEntity>.Delete(TEntity entity)
         {
-            IfNull(entity);
+            CheckIfNull(entity);
             _dBUtils.Remove(entity);
             await _dBUtils.SaveChangesAsync();
 
@@ -45,13 +45,13 @@ namespace Infrastructure.Repositories
 
         async Task<TEntity> IOnlineStore<TEntity>.Update(TEntity entity)
         {
-            IfNull(entity);
+            CheckIfNull(entity);
             _dBUtils.Update(entity);
             await _dBUtils.SaveChangesAsync();
             return entity;
         }
 
-        private void IfNull(TEntity entity)
+        private void CheckIfNull(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException($"{nameof(entity)} shuold not be null.");
