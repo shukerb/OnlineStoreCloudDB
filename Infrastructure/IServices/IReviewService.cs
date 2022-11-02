@@ -12,6 +12,5 @@ namespace Infrastructure.IServices
     {
         Task<Review> Add(ReviewDTO review);
         Task<List<Review>> GetAll();
-        Task<Review> Delete(int id);
     }
 }

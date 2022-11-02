@@ -20,5 +20,9 @@ namespace DataLayer.Models
             Rating = rating;
             Description = description;
         }
+        public Review()
+        {
+
+        }
     }
 }
