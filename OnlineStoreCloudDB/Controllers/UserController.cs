@@ -57,7 +57,7 @@ namespace OnlineStoreCloudDB.Controllers
 
         [Function("DeleteUser")]
         public async Task<HttpResponseData> DeleteUser(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "DELETE", Route = "usersuserId}")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "DELETE", Route = "users/{userId}")]
                 HttpRequestData requestData,
             string userId)
         {
