@@ -14,13 +14,12 @@ namespace DataLayer.Models
         public int Amount { get; set; }
         public List<ProductImage> Images { get; set; }
 
-        public Product(Guid id, string name, string description, int amount, List<ProductImage> images)
+        public Product(Guid id, string name, string description, int amount)
         {
             Id = id;
             Name = name;
             Description = description;
             Amount = amount;
-            Images = images;
         }
 
         public Product()
