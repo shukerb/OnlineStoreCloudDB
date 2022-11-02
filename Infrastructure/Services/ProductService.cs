@@ -108,6 +108,7 @@ namespace Infrastructure.Services
         public async Task<Product> Update(Product product)
         {
             Product p = await GetById(product.Id.ToString());
+            p = product;
             await _onlineStore.Update(p);
             return p;
         }

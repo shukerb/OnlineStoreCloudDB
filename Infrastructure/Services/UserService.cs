@@ -75,6 +75,7 @@ namespace Infrastructure.Services
         public async Task<User> UpdateUser(User user)
         {
             User u = await GetById(user.Id.ToString());
+            u = user;
             await _onlineStore.Update(u);
             return u;
         }

@@ -15,16 +15,14 @@ namespace DataLayer.Models
         public DateTime ShippingDate { get; set; }
         public bool IsShipped { get; set; }
 
-        public Order (Guid id, Guid userId, List<Product> products, DateTime creationDate, DateTime shippingDate, bool isShipped)
+        public Order (Guid id, Guid userId, List<Product> products, DateTime creationDate, bool isShipped)
         {
             Id = id;
             UserId = userId;
             Products = products;
             CreationDate = creationDate;
-            ShippingDate = shippingDate;
             IsShipped = isShipped;
         }
-
         public Order()
         {
 
