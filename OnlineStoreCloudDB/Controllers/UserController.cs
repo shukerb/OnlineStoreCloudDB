@@ -20,7 +20,7 @@ namespace OnlineStoreCloudDB.Controllers
 
         [Function("GetUsers")]
         public async Task<HttpResponseData> GetUsers(
-            [HttpTrigger(AuthorizationLevel.Function, "GET", Route = "users")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "users")]
                 HttpRequestData requestData)
         {
             HttpResponseData response = requestData.CreateResponse();
@@ -38,7 +38,7 @@ namespace OnlineStoreCloudDB.Controllers
 
         [Function("GetUser")]
         public async Task<HttpResponseData> GetUser(
-            [HttpTrigger(AuthorizationLevel.Function, "GET", Route = "user/{userId}")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "user/{userId}")]
                 HttpRequestData requestData,
             string userId)
         {
@@ -57,7 +57,7 @@ namespace OnlineStoreCloudDB.Controllers
 
         [Function("DeleteUser")]
         public async Task<HttpResponseData> DeleteUser(
-            [HttpTrigger(AuthorizationLevel.Function, "DELETE", Route = "user/{userId}")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "DELETE", Route = "user/{userId}")]
                 HttpRequestData requestData,
             string userId)
         {
@@ -76,7 +76,7 @@ namespace OnlineStoreCloudDB.Controllers
 
         [Function("AddUser")]
         public async Task<HttpResponseData> AddUser(
-            [HttpTrigger(AuthorizationLevel.Function,"POST", Route = "user")]
+            [HttpTrigger(AuthorizationLevel.Anonymous,"POST", Route = "user")]
                 HttpRequestData requestData)
         {
             string requestBody = await new StreamReader(requestData.Body).ReadToEndAsync();
