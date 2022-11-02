@@ -38,7 +38,7 @@ namespace OnlineStoreCloudDB.Controllers
 
         [Function("GetUser")]
         public async Task<HttpResponseData> GetUser(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "user/{userId}")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "users/{userId}")]
                 HttpRequestData requestData,
             string userId)
         {
@@ -57,7 +57,7 @@ namespace OnlineStoreCloudDB.Controllers
 
         [Function("DeleteUser")]
         public async Task<HttpResponseData> DeleteUser(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "DELETE", Route = "user/{userId}")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "DELETE", Route = "usersuserId}")]
                 HttpRequestData requestData,
             string userId)
         {
@@ -76,15 +76,16 @@ namespace OnlineStoreCloudDB.Controllers
 
         [Function("AddUser")]
         public async Task<HttpResponseData> AddUser(
-            [HttpTrigger(AuthorizationLevel.Anonymous,"POST", Route = "user")]
+            [HttpTrigger(AuthorizationLevel.Anonymous,"POST", Route = "users")]
                 HttpRequestData requestData)
         {
             string requestBody = await new StreamReader(requestData.Body).ReadToEndAsync();
-            UserDTO userDTO = JsonConvert.DeserializeObject<UserDTO>(requestBody);
 
             HttpResponseData response = requestData.CreateResponse();
             try
             {
+
+                UserDTO userDTO = JsonConvert.DeserializeObject<UserDTO>(requestBody);
                 await response.WriteAsJsonAsync(await _userService.AddUser(userDTO), HttpStatusCode.Created);
             }
             catch
