@@ -84,7 +84,7 @@ namespace OnlineStoreCloudDB.Controllers
 
         [Function("AddProduct")]
         public async Task<HttpResponseData> AddProduct(
-            [HttpTrigger(AuthorizationLevel.Anonymous,"POST", Route = "Products")]
+            [HttpTrigger(AuthorizationLevel.Anonymous,"POST", Route = "products")]
                 HttpRequestData requestData)
         {
             string requestBody = await new StreamReader(requestData.Body).ReadToEndAsync();
