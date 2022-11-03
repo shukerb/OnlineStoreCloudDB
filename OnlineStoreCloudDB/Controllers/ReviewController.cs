@@ -1,7 +1,5 @@
 ﻿using DataLayer.DTO;
 using Infrastructure.IServices;
-using Infrastructure.Services;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.Functions.Worker;
 using Newtonsoft.Json;

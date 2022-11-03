@@ -1,10 +1,11 @@
 ﻿using DataLayer.DTO;
 using DataLayer.Models;
 using Infrastructure.IServices;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
-using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -20,12 +21,12 @@ namespace OnlineStoreCloudDB.Controllers
             _orderService = orderService;
         }
 
-        [Function("GetOrders")]
-        public async Task<HttpResponseData> GetOrders(
+        [FunctionName("GetOrders")]
+        public async Task<IActionResult> GetOrders(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "orders")]
-                HttpRequestData requestData)
+                HttpRequest requestData)
         {
-            HttpResponseData response = requestData.CreateResponse();
+            var response = requestData.CreateResponse();
             try
             {
                 await response.WriteAsJsonAsync(await _orderService.GetAll(), HttpStatusCode.OK);
