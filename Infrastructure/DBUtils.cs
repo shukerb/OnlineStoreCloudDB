@@ -28,9 +28,20 @@ namespace Infrastructure
             modelBuilder.HasDefaultContainer("OnlineStoreDB");
 
             ConfigModel<User>(modelBuilder,nameof(Users));
+            modelBuilder.Entity<User>()
+                .HasPartitionKey(user => user.Id);
+
             ConfigModel<Review>(modelBuilder,nameof(Reviews));
+            modelBuilder.Entity<Review>()
+                .HasPartitionKey(review => review.Id);
+
             ConfigModel<Product>(modelBuilder,nameof(Products));
+            modelBuilder.Entity<Product>()
+                .HasPartitionKey(product => product.Id);
+
             ConfigModel<Order>(modelBuilder,nameof(Orders));
+            modelBuilder.Entity<Order>()
+                .HasPartitionKey(order => order.Id);
 
         }
     }
