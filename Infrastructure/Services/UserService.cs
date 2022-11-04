@@ -8,11 +8,13 @@ namespace Infrastructure.Services
 {
     public class UserService : IUserService
     {
-        private readonly IOnlineStore<User> _onlineStore;
+        private readonly IOnlineStoreRead<User> _onlineStoreRead;
+        private readonly IOnlineStoreWrite<User> _onlineStoreWrite;
 
-        public UserService(IOnlineStore<User> onlineStore)
+        public UserService(IOnlineStoreRead<User> onlineStoreRead, IOnlineStoreWrite<User> onlineStoreWrite)
         {
-            _onlineStore = onlineStore;
+            _onlineStoreRead = onlineStoreRead;
+            _onlineStoreWrite = onlineStoreWrite;
         }
         
         public async Task<User> AddUser(UserDTO user)
@@ -31,24 +33,24 @@ namespace Infrastructure.Services
                 user.Email,
                 NullOrEmptyStringChecker(user.Password)
                 );
-            return await _onlineStore.Add(u);
+            return await _onlineStoreWrite.Add(u);
         }
 
         public async Task DeleteUser(string userId)
         {
             User user = await GetById(NullOrEmptyStringChecker(userId));
-            await _onlineStore.Delete(user);
+            await _onlineStoreWrite.Delete(user);
         }
 
         public async Task<List<User>> GetAll()
         {
-            return await _onlineStore.GetAll().ToListAsync();
+            return await _onlineStoreRead.GetAll().ToListAsync();
         }
 
         public async Task<User> GetByEmail(string email)
         {
             NullOrEmptyStringChecker(email);
-            var result = await _onlineStore.GetAll().FirstOrDefaultAsync(user=>user.Email == email);
+            var result = await _onlineStoreRead.GetAll().FirstOrDefaultAsync(user=>user.Email == email);
             return result;
         }
 
@@ -62,7 +64,7 @@ namespace Infrastructure.Services
                 throw new ArgumentException("Invalid User ID was provided.");
             }
 
-            var result = await _onlineStore.GetAll().FirstOrDefaultAsync(user => user.Id == id);
+            var result = await _onlineStoreRead.GetAll().FirstOrDefaultAsync(user => user.Id == id);
 
             if (result == null)
             {
@@ -76,7 +78,7 @@ namespace Infrastructure.Services
         {
             User u = await GetById(user.Id.ToString());
             u = user;
-            await _onlineStore.Update(u);
+            await _onlineStoreWrite.Update(u);
             return u;
         }
 

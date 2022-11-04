@@ -11,15 +11,17 @@ namespace Infrastructure.Services
 {
     public class ProductService : IProductService
     {
-        private readonly IOnlineStore<Product> _onlineStore;
+        private readonly IOnlineStoreRead<Product> _onlineStoreRead;
+        private readonly IOnlineStoreWrite<Product> _onlineStoreWrite;
         private BlobServiceClient blobServiceClient;
         private BlobContainerClient blobContainerClient;
 
-        public ProductService(IOnlineStore<Product> onlineStore)
+        public ProductService(IOnlineStoreRead<Product> onlineStoreRead, IOnlineStoreWrite<Product> onlineStoreWrite)
         {
             blobServiceClient = new BlobServiceClient(Environment.GetEnvironmentVariable("BlobCreds:ConnectionString", EnvironmentVariableTarget.Process));
             blobContainerClient = blobServiceClient.GetBlobContainerClient(Environment.GetEnvironmentVariable("BlobCreds:ContainerName", EnvironmentVariableTarget.Process));
-            _onlineStore = onlineStore;
+            _onlineStoreRead = onlineStoreRead;
+            _onlineStoreWrite = onlineStoreWrite;
 
         }
 
@@ -43,7 +45,7 @@ namespace Infrastructure.Services
                 NullOrEmptyStringChecker(product.Description),
                 product.Amount
                 );
-            return await _onlineStore.Add(p);
+            return await _onlineStoreWrite.Add(p);
         }
 
         public async Task<Product> AddImage(string id, FilePart image)
@@ -64,18 +66,18 @@ namespace Infrastructure.Services
             //add image to the product
             product.Images.Add(productImage);
 
-            return await _onlineStore.Update(product);
+            return await _onlineStoreWrite.Update(product);
         }
 
         public async Task Delete(string id)
         {
             Product product = await GetById(NullOrEmptyStringChecker(id));
-            await _onlineStore.Delete(product);
+            await _onlineStoreWrite.Delete(product);
         }
 
         public async Task<List<Product>> GetAll()
         {
-            return await _onlineStore.GetAll().ToListAsync();
+            return await _onlineStoreRead.GetAll().ToListAsync();
         }
 
         public async Task<Product> GetById(string id)
@@ -88,7 +90,7 @@ namespace Infrastructure.Services
                 throw new ArgumentException("Invalid product ID was provided.");
             }
 
-            var result = await _onlineStore.GetAll().FirstOrDefaultAsync(product => product.Id == ProductId);
+            var result = await _onlineStoreRead.GetAll().FirstOrDefaultAsync(product => product.Id == ProductId);
 
             if (result == null)
             {
@@ -101,7 +103,7 @@ namespace Infrastructure.Services
         public async Task<Product> GetByName(string name)
         {
             NullOrEmptyStringChecker(name);
-            var result = await _onlineStore.GetAll().FirstOrDefaultAsync(product => product.Name == name);
+            var result = await _onlineStoreRead.GetAll().FirstOrDefaultAsync(product => product.Name == name);
             return result;
         }
 
@@ -109,7 +111,7 @@ namespace Infrastructure.Services
         {
             Product p = await GetById(product.Id.ToString());
             p = product;
-            await _onlineStore.Update(p);
+            await _onlineStoreWrite.Update(p);
             return p;
         }
         private string NullOrEmptyStringChecker(string stringToCheck)

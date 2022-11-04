@@ -14,15 +14,17 @@ namespace Infrastructure.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IOnlineStore<Order> _onlineStore;
+        private readonly IOnlineStoreRead<Order> _onlineStoreRead;
+        private readonly IOnlineStoreWrite<Order> _onlineStoreWrite;
         private readonly IUserService _userService;
         private readonly IProductService _productService;
 
-        public OrderService(IOnlineStore<Order> onlineStore, IUserService userService, IProductService productService)
+        public OrderService(IOnlineStoreRead<Order> onlineStoreRead, IOnlineStoreWrite<Order> onlineStoreWrite, IUserService userService, IProductService productService)
         {
             _productService = productService;
             _userService = userService;
-            _onlineStore = onlineStore;
+            _onlineStoreRead = onlineStoreRead;
+            _onlineStoreWrite = onlineStoreWrite;
         }
 
         public async Task<Order> Add(OrderDTO order)
@@ -47,18 +49,18 @@ namespace Infrastructure.Services
                 false
                 );
             
-            return await _onlineStore.Add(o);
+            return await _onlineStoreWrite.Add(o);
         }
 
         public async Task Delete(string orderId)
         {
             Order order = await GetById(NullOrEmptyStringChecker(orderId));
-            await _onlineStore.Delete(order);
+            await _onlineStoreWrite.Delete(order);
         }
 
         public async Task<List<Order>> GetAll()
         {
-            return await _onlineStore.GetAll().ToListAsync();
+            return await _onlineStoreRead.GetAll().ToListAsync();
         }
 
         public async Task<Order> GetById(string Id)
@@ -71,7 +73,7 @@ namespace Infrastructure.Services
                 throw new ArgumentException("Invalid order ID was provided.");
             }
 
-            var result = await _onlineStore.GetAll().FirstOrDefaultAsync(order => order.Id == OrderId);
+            var result = await _onlineStoreRead.GetAll().FirstOrDefaultAsync(order => order.Id == OrderId);
 
             if (result == null)
             {
@@ -89,7 +91,7 @@ namespace Infrastructure.Services
                 order.IsShipped = true;
             }
             o = order;
-            await _onlineStore.Update(o);
+            await _onlineStoreWrite.Update(o);
             return o;
         }
         private string NullOrEmptyStringChecker(string stringToCheck)

@@ -14,13 +14,15 @@ namespace Infrastructure.Services
 {
     public class ReviewService : IReviewService
     {
-        private readonly IOnlineStore<Review> _onlineStore;
+        private readonly IOnlineStoreRead<Review> _onlineStoreRead;
+        private readonly IOnlineStoreWrite<Review> _onlineStoreWrite;
         private readonly IProductService _productService;
 
-        public ReviewService(IOnlineStore<Review> onlineStore, IProductService productService)
+        public ReviewService(IOnlineStoreRead<Review> onlineStore, IOnlineStoreWrite<Review> onlineStoreWrite, IProductService productService)
         {
             _productService = productService;
-            _onlineStore = onlineStore;
+            _onlineStoreRead = onlineStore;
+            _onlineStoreWrite = onlineStoreWrite;
         }
         public async Task<Review> Add(ReviewDTO review)
         {
@@ -37,12 +39,12 @@ namespace Infrastructure.Services
                 review.Rating,
                 review.Description
                 );
-            return await _onlineStore.Add(r);
+            return await _onlineStoreWrite.Add(r);
         }
 
         public async Task<List<Review>> GetAll()
         {
-            return await _onlineStore.GetAll().ToListAsync();
+            return await _onlineStoreRead.GetAll().ToListAsync();
         }
     }
 }

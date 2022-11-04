@@ -35,7 +35,8 @@ namespace OnlineStoreCloudDB
                     );
             });
 
-            services.AddTransient(typeof(IOnlineStore<>),typeof(OnlineStore<>));
+            services.AddTransient(typeof(IOnlineStoreRead<>),typeof(OnlineStoreRead<>));
+            services.AddTransient(typeof(IOnlineStoreWrite<>),typeof(OnlineStoreWrite<>));
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProductService, ProductService>();
