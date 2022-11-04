@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace OnlineStoreCloudDB
 {
-    public class OnlineStore
+    public class Program
     {
         public static async Task Main()
         {
